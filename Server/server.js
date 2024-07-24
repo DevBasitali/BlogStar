@@ -3,6 +3,8 @@ const mongoose = require ('mongoose')
 const cors = require('cors')
 const config = require('../Server/config')
 const authRoutes = require('./routes/authRoutes');
+const blogRoutes = require ('./routes/blogRoutes')
+
 
 const app = express();
 
@@ -16,6 +18,7 @@ mongoose.connect(config.MongoURI)
 
 app.use ('/api/auth', authRoutes)
 // app.use ('/api/auth', blogRoutes)
+app.use('/api/blog', blogRoutes);
 
 const PORT = process.env.PORT || 5000;
 

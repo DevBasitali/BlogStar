@@ -26,49 +26,23 @@ exports.Login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ email });
-    if (!user) {
+    const users = await User.findOne({ email });
+    if (!users) {
       return res.status(400).json({ msg: "User not found: Signup First" });
     }
 
-    const isMatch = await bcrypt.compare(password, user.password);
-
+    const isMatch = await bcrypt.compare(password, users.password);
     if (!isMatch) {
-      return res.status(400).json({ msg: 'Invalid credentials' });
+      return res.status(400).json({ msg: "Invalid credentials" });
     }
 
-    const payload = { id: user._id }; 
-    const token = jwt.sign(payload, config.jwtKey, { expiresIn: 3600 }); 
-
-    res.status(200).json({ token, msg: "Login successful" }); 
+    const payload = { id: users.id, username: users.username };
+    jwt.sign(payload, config.Key, { expiresIn: 3600 }, (err, token) => {
+      if (err) throw err;
+      res.status(200).json({token, msg: "Login Success" });
+    });
 
   } catch (err) {
     res.status(500).json({ msg: "Something is Wrong" });
   }
 };
-
-
-// exports.Login = async (req, res) => {
-//   const { email, password } = req.body;
-
-//   try {
-//     const user = await User.findOne({ email });
-//     if (!user) {
-//       return res.status(400).json({ msg: "User not found: Signup First" });
-//     }
-
-//     const isMatch = await bcrypt.compare(password, user.password);
-//     if (!isMatch) {
-//       return res.status(400).json({ msg: "Invalid credentials" });
-//     }
-
-//     const payload = { id: User.id, username: User.username };
-//     jwt.sign(payload, config.jwtKey, { expiresIn: 3600 }, (err, token) => {
-//       if (err) throw err;
-//       res.json({ token });
-//     });
-
-//   } catch (err) {
-//     res.status(500).json({ msg: "Something is Wrong" });
-//   }
-// };

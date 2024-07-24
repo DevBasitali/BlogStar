@@ -15,13 +15,11 @@ const BlogSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: 'true'
-
     },
     date: {
         type: Date,
         default: Date.now
     },
-
 })
 
 module.exports = mongoose.model('Blog', BlogSchema)

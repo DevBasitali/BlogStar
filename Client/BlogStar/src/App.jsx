@@ -1,9 +1,12 @@
 import "./App.css";
+import Login from "./components/Auth/Login";
+
 
 function App() {
   return (
+
     <>
-      <h1 className="bg-black text-white">hello pakistan </h1>
+    <Login/>
     </>
   );
 }
