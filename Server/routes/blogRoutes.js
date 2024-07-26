@@ -4,8 +4,8 @@ const BlogController = require ('../controller/blogController')
 const auth = require ('../middleware/auth')
 
 router.post('/', auth, BlogController.CreateBlog);
-router.get('/', blogController.getBlogs);
-router.put('/:id', auth, blogController.updateBlog);
-router.delete('/:id', auth, blogController.deleteBlog);
+// router.get('/', BlogController.getBlogs);
+// router.put('/:id', auth, BlogController.updateBlog);
+// router.delete('/:id', auth, BlogController.deleteBlog);
 
 module.exports = router;

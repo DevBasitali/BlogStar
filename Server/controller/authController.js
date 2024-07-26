@@ -12,11 +12,16 @@ exports.Signup = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ msg: "User is already found" });
     }
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ email, username, password: hashedPassword });
-
     await newUser.save();
     res.status(401).json(newUser);
+
+    const payload = { id: newUser.id, username: newUser.username };
+    const token = jwt.sign( payload, config.Key, { expiresIn: 3600 });
+    res.send(token)
+
   } catch (err) {
     res.status(500).json({ msg: "Server error" });
   }
