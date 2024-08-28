@@ -1,5 +1,4 @@
 {
-  "proxy": "http://localhost:5000",
   "name": "blogstar",
   "private": true,
   "version": "0.0.0",
@@ -28,5 +27,6 @@
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.4",
     "vite": "^5.3.1"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }

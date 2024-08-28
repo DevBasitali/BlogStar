@@ -8,7 +8,13 @@ const blogRoutes = require ('./routes/blogRoutes')
 
 const app = express();
 
-app.use(cors());
+app.use(cors(
+    {
+        origin: 'http://localhost:5173', // Frontend URL
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        credentials: true,
+    }
+));
 app.use(express.json())
 
 mongoose.connect(config.MongoURI)

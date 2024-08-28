@@ -1,4 +1,4 @@
 module.exports = {
     MongoURI : 'mongodb://localhost:27017/BlogStar',
-    Key: 'auth@123'
+    Key: 'auth123'
 }

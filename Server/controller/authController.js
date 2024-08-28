@@ -10,18 +10,14 @@ exports.Signup = async (req, res) => {
   try {
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ msg: "User is already found" });
+      return res.status(400).json({ msg: "User is already exist!!!" });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new User({ email, username, password: hashedPassword });
+
     await newUser.save();
     res.status(401).json(newUser);
-
-    const payload = { id: newUser.id, username: newUser.username };
-    const token = jwt.sign( payload, config.Key, { expiresIn: 3600 });
-    res.send(token)
-
   } catch (err) {
     res.status(500).json({ msg: "Server error" });
   }
@@ -38,16 +34,15 @@ exports.Login = async (req, res) => {
 
     const isMatch = await bcrypt.compare(password, users.password);
     if (!isMatch) {
-      return res.status(400).json({ msg: "Invalid credentials" });
+      return res.status(400).json({ msg: "Check your password" });
     }
 
     const payload = { id: users.id, username: users.username };
     jwt.sign(payload, config.Key, { expiresIn: 3600 }, (err, token) => {
       if (err) throw err;
-      res.status(200).json({token, msg: "Login Success" });
+      res.status(200).json({ token });
     });
-
   } catch (err) {
-    res.status(500).json({ msg: "Something is Wrong" });
+    res.status(500).json({ msg: "Something went Wrong" });
   }
 };
